@@ -12,10 +12,21 @@ const getState = ({ getStore, getActions, setStore }) => {
 					background: "white",
 					initial: "white"
 				}
-			]
+			],
+			contacts:[]
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
+			getData: () => {
+				// Fetch contacts from API
+				fetch("https://playground.4geeks.com/contact/agendas/yonil/contacts")
+					.then(response => response.json())
+					.then(data => {
+						// Accede a la propiedad 'contacts' en el objeto 'data'
+						setStore({contacts:data.contacts || []});
+					})
+					.catch(error => console.error("Error en fetch de contacts:", error));
+			},
 			exampleFunction: () => {
 				getActions().changeColor(0, "green");
 			},
