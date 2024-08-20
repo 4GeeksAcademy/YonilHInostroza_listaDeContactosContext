@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import { Button, Container, Row, Col } from "react-bootstrap";
-import ContactCard from "../component/contactCard.jsx"; // Asegúrate de que la ruta sea correcta
-import AddContactForm from "../component/AddContactForm.jsx"; // Asegúrate de que la ruta sea correcta
+import ContactCard from "../component/contactCard.jsx";
+import AddContactForm from "../component/AddContactForm.jsx";
 import { Context } from "../store/appContext.js";
 
 const Home = () => {
@@ -17,7 +17,7 @@ const Home = () => {
         setEditContact(contact);
         setShowForm(true);
     };
-    
+
     const handleCloseForm = () => {
         setShowForm(false);
         setEditContact(null);
@@ -27,15 +27,14 @@ const Home = () => {
         <Container>
             {showForm ? (
                 <AddContactForm 
-                onClose={handleCloseForm}
-                contact={editContact}
-                 />
-
+                    onClose={handleCloseForm}
+                    contact={editContact} // Pasa el contacto a editar
+                />
             ) : (
                 <>
                     <Row>
                         <Col className="d-flex justify-content-end mb-2 mt-2">
-                            <Button variant="success" onClick={handleShowForm}>
+                            <Button variant="success" onClick={() => handleShowForm()}>
                                 Add New Contact
                             </Button>
                         </Col>
@@ -44,8 +43,8 @@ const Home = () => {
                         <ContactCard
                             key={contact.id}
                             contact={contact}
-                            onEdit={() => handleShowForm(contact)}
-                            onDelete={() => { /* Add delete logic here */ }}
+                            onEdit={() => handleShowForm(contact)} // Para editar el contacto
+                            onDelete={() => { /* Agregar lógica de eliminación aquí */ }}
                         />
                     ))}
                 </>

@@ -2,6 +2,7 @@ import React from "react";
 import { Card, Col, Row } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen, faTrash, faMapMarkerAlt, faPhone, faEnvelope } from "@fortawesome/free-solid-svg-icons";
+import MarkImage  from '../../img/mark.jpg';
 
 const ContactCard = ({ contact, onEdit, onDelete }) => {
     return (
@@ -10,7 +11,7 @@ const ContactCard = ({ contact, onEdit, onDelete }) => {
                 <Row>
                     <Col xs={2} className="d-flex align-items-center" style={{ paddingRight: "0px" }}>
                         <img
-                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQcrXFMfLD8Q6GaWnbwps7b7cejIIn_zojv6w&shttps://www.biografiasyvidas.com/biografia/z/fotos/zuckerberg.jpg"
+                            src={MarkImage}
                             alt="contact"
                             className="img-fluid rounded-circle"
                             style={{ width: "80px", height: "80px", objectFit: "cover" }}

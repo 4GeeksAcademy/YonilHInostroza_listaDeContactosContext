@@ -34,8 +34,9 @@ const AddContactForm = ({ onClose, contact }) => {
             // Agregar nuevo contacto
             actions.addContact(newContact);
         }
-        onClose();
+        onClose(); // Cerrar el formulario después de agregar o editar
     };
+    
 
     return (
         <Container>

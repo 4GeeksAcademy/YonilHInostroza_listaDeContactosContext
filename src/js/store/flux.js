@@ -57,6 +57,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 })
                 .then(response => response.json())
                 .then(data => {
+                    console.log("Contacto agregado:", data); // Verifica la respuesta de la API
                     // Agregar el nuevo contacto al estado local
                     setStore(prevState => ({
                         contacts: [...prevState.contacts, data]
@@ -64,6 +65,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 })
                 .catch(error => console.error("Error al agregar el contacto:", error));
             },
+            
 
             deleteContact: (id) => {
                 fetch(`https://playground.4geeks.com/contact/agendas/yonil/contacts/${id}`, {
