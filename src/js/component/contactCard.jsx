@@ -16,7 +16,7 @@ const ContactCard = ({ contact, onEdit, onDelete }) => {
                             style={{ width: "80px", height: "80px", objectFit: "cover" }}
                         />
                     </Col>
-                    <Col xs={8} className="d-flex flex-column justify-content-center" style={{ marginLeft: "-15px" }}>
+                    <Col xs={8} className="d-flex flex-column justify-content-center">
                         <h6 className="mb-1">{contact.name}</h6>
                         <p className="mb-1">
                             <FontAwesomeIcon icon={faMapMarkerAlt} className="mr-2" style={{ marginRight: "10px" }} />
