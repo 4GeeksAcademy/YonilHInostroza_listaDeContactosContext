@@ -1,56 +1,93 @@
 const getState = ({ getStore, getActions, setStore }) => {
-	return {
-		store: {
-			demo: [
-				{
-					title: "FIRST",
-					background: "white",
-					initial: "white"
-				},
-				{
-					title: "SECOND",
-					background: "white",
-					initial: "white"
-				}
-			],
-			contacts:[]
-		},
-		actions: {
-			// Use getActions to call a function within a fuction
-			getData: () => {
-				// Fetch contacts from API
-				fetch("https://playground.4geeks.com/contact/agendas/yonil/contacts")
-					.then(response => response.json())
-					.then(data => {
-						// Accede a la propiedad 'contacts' en el objeto 'data'
-						setStore({contacts:data.contacts || []});
-					})
-					.catch(error => console.error("Error en fetch de contacts:", error));
-			},
-			exampleFunction: () => {
-				getActions().changeColor(0, "green");
-			},
-			loadSomeData: () => {
-				/**
-					fetch().then().then(data => setStore({ "foo": data.bar }))
-				*/
-			},
-			changeColor: (index, color) => {
-				//get the store
-				const store = getStore();
+    return {
+        store: {
+            demo: [
+                {
+                    title: "FIRST",
+                    background: "white",
+                    initial: "white"
+                },
+                {
+                    title: "SECOND",
+                    background: "white",
+                    initial: "white"
+                }
+            ],
+            contacts: []
+        },
+        actions: {
+            getData: () => {
+                fetch("https://playground.4geeks.com/contact/agendas/yonil/contacts")
+                    .then(response => response.json())
+                    .then(data => {
+                        setStore({ contacts: data.contacts || [] });
+                    })
+                    .catch(error => console.error("Error en fetch de contacts:", error));
+            },
 
-				//we have to loop the entire demo array to look for the respective index
-				//and change its color
-				const demo = store.demo.map((elm, i) => {
-					if (i === index) elm.background = color;
-					return elm;
-				});
+            updateContact: (updatedContact) => {
+                const store = getStore();
 
-				//reset the global store
-				setStore({ demo: demo });
-			}
-		}
-	};
+                // Realizar la solicitud PUT al servidor para actualizar el contacto
+                fetch(`https://playground.4geeks.com/contact/agendas/yonil/contacts/${updatedContact.id}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(updatedContact)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Actualizar el estado local si la actualización fue exitosa
+                    const contacts = store.contacts.map(contact =>
+                        contact.id === updatedContact.id ? updatedContact : contact
+                    );
+                    setStore({ contacts });
+                })
+                .catch(error => console.error("Error al actualizar el contacto:", error));
+            },
+
+            addContact: (newContact) => {
+                fetch("https://playground.4geeks.com/contact/agendas/yonil/contacts", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(newContact)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Agregar el nuevo contacto al estado local
+                    setStore(prevState => ({
+                        contacts: [...prevState.contacts, data]
+                    }));
+                })
+                .catch(error => console.error("Error al agregar el contacto:", error));
+            },
+
+            deleteContact: (id) => {
+                fetch(`https://playground.4geeks.com/contact/agendas/yonil/contacts/${id}`, {
+                    method: 'DELETE'
+                })
+                .then(() => {
+                    // Eliminar el contacto del estado local
+                    const store = getStore();
+                    const contacts = store.contacts.filter(contact => contact.id !== id);
+                    setStore({ contacts });
+                })
+                .catch(error => console.error("Error al eliminar el contacto:", error));
+            },
+
+            changeColor: (index, color) => {
+                const store = getStore();
+                const demo = store.demo.map((elm, i) => {
+                    if (i === index) elm.background = color;
+                    return elm;
+                });
+                setStore({ demo });
+            }
+        }
+    };
 };
 
 export default getState;

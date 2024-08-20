@@ -1,20 +1,40 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Button, Container, Form, Row, Col } from "react-bootstrap";
 import { Context } from "../store/appContext.js";
 
-const AddContactForm = ({ onClose }) => {
+const AddContactForm = ({ onClose, contact }) => {
     const { actions } = useContext(Context);
     const [name, setName] = useState("");
     const [address, setAddress] = useState("");
     const [phone, setPhone] = useState("");
     const [email, setEmail] = useState("");
 
+    // Cargar los datos del contacto si `contact` está presente
+    useEffect(() => {
+        if (contact) {
+            setName(contact.name);
+            setAddress(contact.address);
+            setPhone(contact.phone);
+            setEmail(contact.email);
+        } else {
+            setName("");
+            setAddress("");
+            setPhone("");
+            setEmail("");
+        }
+    }, [contact]);
+
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Add new contact logic (e.g., send data to API or update local state)
-        // Example (assuming you have an addContact function in actions):
-        actions.addContact({ name, address, phone, email });
-        onClose(); // Close the form after submission
+        const newContact = { name, address, phone, email };
+        if (contact) {
+            // Editar contacto existente
+            actions.updateContact({ ...contact, ...newContact });
+        } else {
+            // Agregar nuevo contacto
+            actions.addContact(newContact);
+        }
+        onClose();
     };
 
     return (

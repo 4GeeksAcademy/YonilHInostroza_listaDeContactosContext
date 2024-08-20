@@ -7,18 +7,30 @@ import { Context } from "../store/appContext.js";
 const Home = () => {
     const { store, actions } = useContext(Context);
     const [showForm, setShowForm] = useState(false);
+    const [editContact, setEditContact] = useState(null);
 
     useEffect(() => {
         actions.getData();
     }, []);
 
-    const handleShowForm = () => setShowForm(true);
-    const handleCloseForm = () => setShowForm(false);
+    const handleShowForm = (contact = null) => {
+        setEditContact(contact);
+        setShowForm(true);
+    };
+    
+    const handleCloseForm = () => {
+        setShowForm(false);
+        setEditContact(null);
+    };
 
     return (
         <Container>
             {showForm ? (
-                <AddContactForm onClose={handleCloseForm} />
+                <AddContactForm 
+                onClose={handleCloseForm}
+                contact={editContact}
+                 />
+
             ) : (
                 <>
                     <Row>
@@ -32,7 +44,7 @@ const Home = () => {
                         <ContactCard
                             key={contact.id}
                             contact={contact}
-                            onEdit={() => { /* Add edit logic here */ }}
+                            onEdit={() => handleShowForm(contact)}
                             onDelete={() => { /* Add delete logic here */ }}
                         />
                     ))}
