@@ -10,7 +10,7 @@ const Home = () => {
 
     useEffect(() => {
         actions.getData();
-    }, [actions]);
+    }, []);
 
     const handleShowForm = () => setShowForm(true);
     const handleCloseForm = () => setShowForm(false);
