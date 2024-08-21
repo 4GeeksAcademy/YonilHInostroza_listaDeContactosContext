@@ -41,7 +41,7 @@ const ContactCard = ({ contact, onEdit, onDelete }) => {
                         <FontAwesomeIcon
                             icon={faTrash}
                             onClick={() => onDelete(contact)}
-                            style={{ cursor: "pointer" }}
+                            style={{ cursor: "pointer", color: "red" }}
                         />
                     </Col>
                 </Row>

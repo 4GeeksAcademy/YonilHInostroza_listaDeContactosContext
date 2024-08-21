@@ -22,7 +22,7 @@ const AddContactForm = ({ onClose, contact }) => {
             setPhone("");
             setEmail("");
         }
-    }, [contact]);
+    }, []);
 
     const handleSubmit = (e) => {
         e.preventDefault();
