@@ -5,6 +5,14 @@ import { faPen, faTrash, faMapMarkerAlt, faPhone, faEnvelope } from "@fortawesom
 import MarkImage  from '../../img/mark.jpg';
 
 const ContactCard = ({ contact, onEdit, onDelete }) => {
+
+    const handleDeleteClick = () => {
+        const isConfirmed = window.confirm("¿Estás seguro que deseas eliminar este contacto?");
+        if (isConfirmed) {
+            onDelete(contact.id); // Solo se llama a onDelete si el usuario confirma
+        }
+    };
+
     return (
         <Card className="mb-2" style={{ padding: "8px" }}>
             <Card.Body className="p-2">
@@ -40,7 +48,7 @@ const ContactCard = ({ contact, onEdit, onDelete }) => {
                         />
                         <FontAwesomeIcon
                             icon={faTrash}
-                            onClick={() => onDelete(contact.id)}
+                            onClick={handleDeleteClick}
                             style={{ cursor: "pointer", color: "red" }}
                         />
                     </Col>

@@ -23,6 +23,7 @@ const Home = () => {
         setEditContact(null);
     };
 
+
     return (
         <Container>
             {showForm ? (
@@ -44,7 +45,7 @@ const Home = () => {
                             key={contact.id}
                             contact={contact}
                             onEdit={() => handleShowForm(contact)} // Para editar el contacto
-                            onDelete={() => { /* Agregar lógica de eliminación aquí */ }}
+                            onDelete={actions.deleteContact}
                         />
                     ))}
                 </>
